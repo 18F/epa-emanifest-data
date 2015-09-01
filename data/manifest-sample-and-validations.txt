@@ -1,0 +1,258 @@
+[
+   {
+	"ManifestTrackingNumber":"3 Letters  9 numbers",
+	"EmergencyResponsePhone":
+		{
+		"TelephoneNumberDataType":"23 alphanumberic string accounting for international numbers e.g. +001 1234321234, to be honest this is just a safety feature, most will be standard 10 digit"
+		},
+	"Generator":
+	    [
+		{
+		"HandlerDataType":
+		    [
+			{
+			"HandlerNameDataType":"Name of a company with a 40 char string",
+			"HandlerIDDataType":"3 Letters  9 numbers",
+			"TelephoneNumberDataType":"23 alphanumberic string accounting for international numbers e.g. +001 1234321234, to be honest this is just a safety feature, most will be standard 10 digit",
+                 	"HandlerAddressDataType":
+				[
+				    {
+					"StreetNumberDataType":"12 Char string, not sure why this is here, we may want to strike",
+				     	"AddressDataType":"30 Character",
+					"LocalityNameDataType":"50 Character",
+					"StateDistrictDataType":"50 Character, we should change to 2 letter codes",
+					"CountryDataType":"50 Character, we should change to abreviation",
+					"PostalCodeDataType":"9 numbers"
+				    }
+				],
+			"SignatureBlockDataType":
+				[
+				    {
+					"CertificationStatementDataDataType":"I hereby declare that the contents of this consignment are fully and accurately described above by the proper shipping name, and are classified, packaged, marked and labeled/placarded, and are in all respects in proper condition for transport according to applicable international and national governmental regulations. If export shipment and I am the Primary Exporter, I certify that the contents of this consignment conform to the terms of the attached EPA Acknowledgment of Consent. I certify that the waste minimization statement identified in 40 CFR 262.27(a) (if I am a large quantity generator) or (b) (if I am a small quantity generator) is true.",
+					"SignatoryName":"40 Character",
+					"SignatureDate":"YYYY-MM-DDTHH:MM:SSZ we need to check if this needs to be further defined.",
+					"SignatureBlock":"base64Binary"
+				    }
+				]
+			}
+		   ]
+		}
+	    ],
+	"Transporter":
+	    [
+		{
+		"HandlerDataType":
+		    [
+			{
+			"HandlerNameDataType":"Name of a company with a 40 char string",
+			"HandlerIDDataType":"3 Letters  9 numbers",
+			"SignatureBlockDataType":
+				[
+				    {
+					"CertificationStatementDataDataType":"I hereby declare that the contents of this consignment are fully and accurately described above by the proper shipping name, and are classified, packaged, marked and labeled/placarded, and are in all respects in proper condition for transport according to applicable international and national governmental regulations. If export shipment and I am the Primary Exporter, I certify that the contents of this consignment conform to the terms of the attached EPA Acknowledgment of Consent. I certify that the waste minimization statement identified in 40 CFR 262.27(a) (if I am a large quantity generator) or (b) (if I am a small quantity generator) is true.",
+					"SignatoryName":"40 Character",
+					"SignatureDate":"YYYY-MM-DDTHH:MM:SSZ we need to check if this needs to be further defined.",
+					"SignatureBlock":"base64Binary"
+				    }
+				]
+			}
+		   ]
+		}
+	    ],
+	"TSDF":
+	    [
+		{
+		"HandlerDataType":
+		    [
+			{
+			"HandlerNameDataType":"Name of a company with a 40 char string",
+			"HandlerIDDataType":"3 Letters  9 numbers",
+			"TelephoneNumberDataType":"23 alphanumberic string accounting for international numbers e.g. +001 1234321234, to be honest this is just a safety feature, most will be standard 10 digit",
+                 	"HandlerAddressDataType":
+				[
+				    {
+					"StreetNumberDataType":"12 Char string, not sure why this is here, we may want to strike",
+				     	"AddressDataType":"30 Character",
+					"LocalityNameDataType":"50 Character",
+					"StateDistrictDataType":"50 Character, we should change to 2 letter codes",
+					"CountryDataType":"50 Character, we should change to abreviation",
+					"PostalCodeDataType":"9 numbers"
+				    }
+				],
+				"SignatureBlockDataType":
+				[
+				    {
+					"CertificationStatementDataDataType":"I hereby declare that the contents of this consignment are fully and accurately described above by the proper shipping name, and are classified, packaged, marked and labeled/placarded, and are in all respects in proper condition for transport according to applicable international and national governmental regulations. If export shipment and I am the Primary Exporter, I certify that the contents of this consignment conform to the terms of the attached EPA Acknowledgment of Consent. I certify that the waste minimization statement identified in 40 CFR 262.27(a) (if I am a large quantity generator) or (b) (if I am a small quantity generator) is true.",
+					"SignatoryName":"40 Character",
+					"SignatureDate":"YYYY-MM-DDTHH:MM:SSZ we need to check if this needs to be further defined.",
+					"SignatureBlock":"base64Binary"
+				    }
+				]
+			}
+		   ]
+		}
+	    ],
+	"ManifestedWaste":
+	    [
+		{
+		"WasteLineItemDataType":
+		    [
+			{
+			    "HazardousWaste":"boolean",
+			    "EPADescriptionDataType":
+				[
+				    {
+					"SpecialHandlingDataType":"2000 Character",
+					"TrackingInstructionsDataType":"2000 Character",
+					"WasteProfileNumberDataType":"9 Charater pattern value=([0-9])+",
+					"ContainerNumberDataType":"20 Character",
+					"ResponseGuideNumberDataType":"4 Alphanumeric pattern value=[0-9,a-z,A-Z](0-9)+"
+				    }
+				],
+			    "DOTDescriptionDataType":
+				[
+				    {
+					"DOTShippingNameDataType":"255 Character",
+					"DOTHazardClassDataType":"300 Character",
+					"DOTIDNumberDataType":"6 Character",
+					"DOTPackingGroupDataType":["Any of","I","II","III"]
+				    }
+				],
+			    "ContainerInfoDataType":
+				[
+				    {
+					"ContainerNumberOf":"Integer",
+					"ContainerTypeDataType":["Any of","BA","CF","CM","CW","CY","DF","DM","DT","DW","HG","TC","TP","TT"]
+					
+				    }
+				],
+			    "TotalQuantity":165,
+			    "UnitsOfMeasureDataType":["Any of","G","K","L","M","N","P","T","Y"],
+			    "WasteCodeDataTypeFederal":"4 Alphnumeric see Substance Registries Serivce",
+			    "WasteCodeDataTypeState":"8 Alphanumeric need to get complete data set and ensure what we have is valid"
+
+			}
+
+		    ]
+		}
+	    ],
+	"AdditionalInfo_Line14":
+	    [
+		{"AdditionalInfo_Line14DataType":
+		   [
+			{
+			    "AdditionalInfoTextDataType":"The line below is redundant, ask me how!",
+			    "ManifestTrackingNumberDataType":"3 Letters  9 numbers",
+			    "HandlerDataType":
+			    [
+				{
+				"HandlerNameDataType":"Name of a company with a 40 char string",
+				"HandlerIDDataType":"3 Letters  9 numbers",
+				"TelephoneNumberDataType":"23 alphanumberic string accounting for international numbers e.g. +001 1234321234 to be honest this is just a safety feature, most will be standard 10 digit",
+        	         	"HandlerAddressDataType":
+					[
+					    {
+						"StreetNumberDataType":"12 Char string, not sure why this is here, we may want to strike",
+				     		"AddressDataType":"30 Character",
+						"LocalityNameDataType":"50 Character",
+						"StateDistrictDataType":"50 Character, we should change to 2 letter codes",
+						"CountryDataType":"50 Character, we should change to abreviation",
+						"PostalCodeDataType":"9 numbers"
+					    }
+					],
+					"SignatureBlockDataType":
+					[
+					    {
+						"CertificationStatementDataDataType":"I hereby declare that the contents of this consignment are fully and accurately described above by the proper shipping name, and are classified, packaged, marked and labeled/placarded, and are in all respects in proper condition for transport according to applicable international and national governmental regulations. If export shipment and I am the Primary Exporter, I certify that the contents of this consignment conform to the terms of the attached EPA Acknowledgment of Consent. I certify that the waste minimization statement identified in 40 CFR 262.27(a) (if I am a large quantity generator) or (b) (if I am a small quantity generator) is true.",
+						"SignatoryName":"40 Character",
+						"SignatureDate":"YYYY-MM-DDTHH:MM:SSZ we need to check if this needs to be further defined.",
+						"SignatureBlock":"base64Binary"
+					    }
+					]
+				}
+			   ],
+			    "DateRemovedFromService":"YYYY-MM-DD",
+			    "PCBDescriptionDataType":"2000 Character",
+			    "SpecialPermitIDDataType":"Need more information",
+			    "UserDefinedField_Line14DataType":
+				[
+				    {
+					"UDFFacilityOwner":"3 Letters  9 numbers",
+					"UDFDescriptionDataType":"255 Character",
+					"UDFDataDataType":"30 Character"
+				    }
+				]
+				
+			}
+		   ]
+		}
+	    ],
+	"InternationalShipmentInfo":
+	    [
+		{"IntlInfoDataType":
+		    [
+			{
+
+			    "ImportExportFlagDataType":["Either of","Import","Export"],
+			    "EntryExitPortDataType":"25 Character, look for validation",
+			    "SignatureBlockDataType":
+				[
+				    {
+					"CertificationStatementDataDataType":"I hereby declare that the contents of this consignment are fully and accurately described above by the proper shipping name, and are classified, packaged, marked and labeled/placarded, and are in all respects in proper condition for transport according to applicable international and national governmental regulations. If export shipment and I am the Primary Exporter, I certify that the contents of this consignment conform to the terms of the attached EPA Acknowledgment of Consent. I certify that the waste minimization statement identified in 40 CFR 262.27(a) (if I am a large quantity generator) or (b) (if I am a small quantity generator) is true.",
+					"SignatoryName":"40 Character",
+					"SignatureDate":"YYYY-MM-DDTHH:MM:SSZ we need to check if this needs to be further defined.",
+					"SignatureBlock":"base64Binary"
+				    }
+				]
+
+			}
+		    ]
+		}
+	    ],
+	"DesignatedFacilityInfo":
+	    [
+		{"DesignatedFacilityInfoDataType":
+		    [
+			{
+			    "QuantityDiscrepancy":"boolean",
+			    "TypeDiscrepancy":"boolean",
+			    "ResidueDiscrepancy":"boolean",
+			    "PartialRejection":"boolean",
+			    "FullRejection":"boolean",
+			    "ManifestTrackingNumberDataType":"3 Letters  9 numbers",
+			    "AdditionalInfoTextDataType":"2000 Character",
+			    "HandlerDataType":
+			        [
+				    {
+					"HandlerNameDataType":"Name of a company with a 40 char string",
+					"HandlerIDDataType":"3 Letters  9 numbers",
+					"TelephoneNumberDataType":"23 alphanumberic string accounting for international numbers e.g. +001 1234321234, to be honest this is just a safety feature, most will be standard 10 digit",
+        	        	 	"HandlerAddressDataType":
+				  	    [
+					    	{
+						    "StreetNumberDataType":"12 Char string, not sure why this is here, we may want to strike",
+				     		    "AddressDataType":"30 Character",
+						    "LocalityNameDataType":"50 Character",
+						    "StateDistrictDataType":"50 Character, we should change to 2 letter codes",
+						    "CountryDataType":"50 Character, we should change to abreviation",
+						    "PostalCodeDataType":"9 numbers"
+					        }
+					    ],
+					"SignatureBlockDataType":
+					    [
+					        {
+						    "CertificationStatementDataDataType":"I hereby declare that the contents of this consignment are fully and accurately described above by the proper shipping name, and are classified, packaged, marked and labeled/placarded, and are in all respects in proper condition for transport according to applicable international and national governmental regulations. If export shipment and I am the Primary Exporter, I certify that the contents of this consignment conform to the terms of the attached EPA Acknowledgment of Consent. I certify that the waste minimization statement identified in 40 CFR 262.27(a) (if I am a large quantity generator) or (b) (if I am a small quantity generator) is true.",
+						    "SignatoryName":"40 Character",
+						    "SignatureDate":"YYYY-MM-DDTHH:MM:SSZ we need to check if this needs to be further defined.",
+						    "SignatureBlock":"base64Binary"
+					        }
+					    ]
+				   }
+			       ]
+			}
+		    ]
+		}
+	    ]
+   }
+]
+ 

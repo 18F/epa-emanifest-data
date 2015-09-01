@@ -1,0 +1,589 @@
+<?xml version="1.0"?>
+<xsd:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.epa.gov/E-Manifest"
+	xmlns="http://www.epa.gov/E-Manifest" elementFormDefault="qualified">
+
+<!--
+*****************************************************************************
+* SIMPLE TYPE DEFINITIONS													*
+*****************************************************************************
+-->
+
+<!-- ========================================================================
+Definition of an EPA Handler ID (RCRA ID) (lines 1, 6, 7, 8, 18b)
+-->
+<xsd:simpleType name="HandlerIDDataType">
+	<xsd:restriction base="xsd:string">
+		<xsd:maxLength value="12"/>
+	</xsd:restriction>
+</xsd:simpleType>
+
+<!-- ========================================================================
+ Definition of a Manifest Tracking Number (line 4)
+
+ CHANGE
+	2015.08.26	Manifest Tracking IDs are alphanumeric, not numeric, comment cutted the pattern
+	2015.07.23	Updated to restrict values to a string of digits.
+ -->
+<xsd:simpleType name="ManifestTrackingNumberDataType">
+	<xsd:restriction base="xsd:string">
+		<xsd:maxLength value="12"/>
+		<!-- <xsd:pattern value="([0-9])+" -->
+	</xsd:restriction>
+</xsd:simpleType>
+
+<!-- ========================================================================
+Definition of a Telephone Number (lines 3, 5, 8, 18b)
+	- International phone numbers are 15 characters, plus three for the
+		country calling code plus 5 for an extension number.
+		
+CHANGE
+	2015.07.23	Updated to restrict values to a string starting with a "0"
+	or a "+" followed by 22 numbers.
+-->
+<xsd:simpleType name="TelephoneNumberDataType">
+	<xsd:restriction base="xsd:string">
+		<xsd:maxLength value="23"/>
+		<xsd:pattern value="[+,0]([0-9])+"
+	</xsd:restriction>
+</xsd:simpleType>
+
+<!-- ========================================================================
+Definition of a Handler Name (lines 5, 6, 7, 8, 18b)
+-->
+<xsd:simpleType name="HandlerNameDataType">
+	<xsd:restriction base="xsd:string">
+		<xsd:maxLength value="40"/>
+	</xsd:restriction>
+</xsd:simpleType>
+
+<!-- ========================================================================
+Definition of a Street Number Entry (lines 5, 8, 18b)
+-->
+<xsd:simpleType name="StreetNumberDataType">
+	<xsd:restriction base="xsd:string">
+		<xsd:maxLength value="12"/>
+	</xsd:restriction>
+</xsd:simpleType>
+
+<!-- ========================================================================
+Definition of an Address Line Entry (lines 5, 8, 18b)
+-->
+<xsd:simpleType name="AddressDataType">
+	<xsd:restriction base="xsd:string">
+		<xsd:maxLength value="30"/>
+	</xsd:restriction>
+</xsd:simpleType>
+
+<!-- ========================================================================
+Definition of a Locality/City Name (lines 5, 8, 18b)
+	- 50 is considered long enough to handle most location names
+-->
+<xsd:simpleType name="LocalityNameDataType">
+	<xsd:restriction base="xsd:string">
+		<xsd:maxLength value="50"/>
+	</xsd:restriction>
+</xsd:simpleType>
+
+<!-- ========================================================================
+Definition of a State/District Name(lines 5, 8, 18b)
+	- 50 is considered long enough to handle most location names
+-->
+<xsd:simpleType name="StateDistrictDataType">
+	<xsd:restriction base="xsd:string">
+		<xsd:maxLength value="50"/>
+	</xsd:restriction>
+</xsd:simpleType>
+
+<!-- ========================================================================
+Definition of a Country (lines 5, 8, 18b)
+	- 50 is considered long enough to handle any country names
+-->
+<xsd:simpleType name="CountryDataType">
+	<xsd:restriction base="xsd:string">
+		<xsd:maxLength value="50"/>
+	</xsd:restriction>
+</xsd:simpleType>
+
+<!-- ========================================================================
+Definition of a ZIP/Postal Code(lines 5, 8, 18b)
+	- 9 is the maximum length of any postal code (numbers only)
+
+CHANGE
+	0215.07.23	Updated to restrict values to nine digits.
+-->
+<xsd:simpleType name="PostalCodeDataType">
+	<xsd:restriction base="xsd:string">
+		<xsd:maxLength value="9"/>
+		<xsd:pattern value="([0-9])+"
+	</xsd:restriction>
+</xsd:simpleType>
+
+<!-- ========================================================================
+Special Handling Data Type(lines 9b)
+
+CHANGE
+	2015.07.23 Added based on feedback from FAA
+-->
+<xsd:simpleType name="SpecialHandlingDataType">
+	<xsd:restriction base="xsd:string">
+		<xsd:maxLength value="2000"/>
+	</xsd:restriction>
+</xsd:simpleType>
+
+<!-- ========================================================================
+Tracking Instructions Data Type(lines 9b)
+
+CHANGE
+	2015.07.23 Added based on feedback from FAA
+-->
+<xsd:simpleType name="TrackingInstructionsDataType">
+	<xsd:restriction base="xsd:string">
+		<xsd:maxLength value="2000"/>
+	</xsd:restriction>
+</xsd:simpleType>
+
+<!-- ========================================================================
+Waste Profile Number Data Type(lines 9b)
+
+CHANGE
+	2015.07.23 Added based on feedback from FAA
+-->
+<xsd:simpleType name="WasteProfileNumberDataType">
+	<xsd:restriction base="xsd:string">
+		<xsd:maxLength value="9"/>
+		<xsd:pattern value="([0-9])+"/>
+	</xsd:restriction>
+</xsd:simpleType>
+
+<!-- ========================================================================
+Container Number Data Type(lines 9b)
+
+CHANGE
+	2015.07.23 Added based on feedback from FAA
+-->
+<xsd:simpleType name="ContainerNumberDataType">
+	<xsd:restriction base="xsd:string">
+		<xsd:maxLength value="20"/>
+	</xsd:restriction>
+</xsd:simpleType>
+
+<!-- ========================================================================
+Response Guide Number Data Type(lines 9b)
+
+CHANGE
+	2015.07.23 Added based on feedback from FAA
+-->
+<xsd:simpleType name="ResponseGuideNumberDataType">
+	<xsd:restriction base="xsd:string">
+		<xsd:maxLength value="4"/>
+		<xsd:pattern value="[0-9,a-z,A-Z](0-9)+"
+	</xsd:restriction>
+</xsd:simpleType>
+
+<!-- ========================================================================
+Definition of a DOT Proper Shipping Name (Line 9b).
+-->
+<xsd:simpleType name="DOTShippingNameDataType">
+	<xsd:restriction base="xsd:string">
+		<xsd:maxLength value="255"/>
+	</xsd:restriction>
+</xsd:simpleType>
+
+<!-- ========================================================================
+Definition of a DOT Hazard Class (Line 9b).
+-->
+<xsd:simpleType name="DOTHazardClassDataType">
+	<xsd:restriction base="xsd:string">
+		<xsd:maxLength value="300"/>
+	</xsd:restriction>
+</xsd:simpleType>
+
+<!-- ========================================================================
+Definition of a DOT ID Number (Line 9b).
+-->
+<xsd:simpleType name="DOTIDNumberDataType">
+	<xsd:restriction base="xsd:string">
+		<xsd:maxLength value="6"/>
+	</xsd:restriction>
+</xsd:simpleType>
+
+<!-- ========================================================================
+Definition of a DOT Packing Group (Line 9b).
+-->
+<xsd:simpleType name="DOTPackingGroupDataType">
+	<xsd:restriction base="xsd:string">
+		<xsd:enumeration value="I"/>
+		<xsd:enumeration value="II"/>
+		<xsd:enumeration value="III"/>
+	</xsd:restriction>
+</xsd:simpleType>
+
+<!-- ========================================================================
+Definition of valid container types (Line 10).
+-->
+<xsd:simpleType name="ContainerTypeDataType">
+	<xsd:restriction base="xsd:string">
+		<xsd:enumeration value="BA"/>
+		<xsd:enumeration value="CF"/>
+		<xsd:enumeration value="CM"/>
+		<xsd:enumeration value="CW"/>
+		<xsd:enumeration value="CY"/>
+		<xsd:enumeration value="DF"/>
+		<xsd:enumeration value="DM"/>
+		<xsd:enumeration value="DT"/>
+		<xsd:enumeration value="DW"/>
+		<xsd:enumeration value="HG"/>
+		<xsd:enumeration value="TC"/>
+		<xsd:enumeration value="TP"/>
+		<xsd:enumeration value="TT"/>
+    <xsd:enumeration value="Other" />
+	</xsd:restriction>
+</xsd:simpleType>
+
+<!-- ========================================================================
+Definition of valid units of measure (Line 12).
+-->
+<xsd:simpleType name="UnitsOfMeasureDataType">
+	<xsd:restriction base="xsd:string">
+		<xsd:enumeration value="G"/>
+		<xsd:enumeration value="K"/>
+		<xsd:enumeration value="L"/>
+		<xsd:enumeration value="M"/>
+		<xsd:enumeration value="N"/>
+		<xsd:enumeration value="P"/>
+		<xsd:enumeration value="T"/>
+		<xsd:enumeration value="Y"/>
+	</xsd:restriction>
+</xsd:simpleType>
+
+<!-- ========================================================================
+Definition of a waste code (Line 13).
+
+CHANGE:
+	2015.08.26      Broke into two elements this one is for federal the other for state changed the federal length to 4
+	2015.07.22	Changed length to 8 characters based on EPA feedback.
+
+-->
+<xsd:simpleType name="WasteCodeDataTypeFederal">
+	<xsd:restriction base="xsd:string">
+		<xsd:maxLength value="4"/>
+	</xsd:restriction>
+</xsd:simpleType>
+<!-- ========================================================================
+Definition of a waste code (Line 13).
+
+CHANGE:
+	2015.08.26      Broke into two elements this one is for state waste codes the other for federal
+	2015.07.22	Changed length to 8 characters based on EPA feedback.
+-->
+<xsd:simpleType name="WasteCodeDataTypeState">
+	<xsd:restriction base="xsd:string">
+		<xsd:maxLength value="8"/>
+	</xsd:restriction>
+</xsd:simpleType>
+
+<!-- ========================================================================
+Definition to support the Additional Information block (lines 14 and 18).
+-->
+<xsd:simpleType name="AdditionalInfoTextDataType">
+	<xsd:restriction base="xsd:string">
+		<xsd:maxLength value="2000"/>
+	</xsd:restriction>
+</xsd:simpleType>
+
+<!-- ========================================================================
+Definition to support PCB Information (lines 14).
+
+CHANGE
+	2015.07.23	Added to support breakout of line 14 information.
+-->
+<xsd:simpleType name="PCBDescriptionDataType">
+	<xsd:restriction base="xsd:string">
+		<xsd:maxLength value="2000"/>
+	</xsd:restriction>
+</xsd:simpleType>
+
+<!-- ========================================================================
+Definition of a User defined fields (line 14)
+
+CHANGED:
+	2015.08.26 - added
+-->
+
+<xsd:simpleType name="UDFDescriptionDataType">
+	<xsd:restriction base="xsd:string">
+		<xsd:maxLength value="255"/>
+	</xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="UDFDataDataType">
+	<xsd:restriction base="xsd:string">
+		<xsd:maxLength value="30"/>
+	</xsd:restriction>
+</xsd:simpleType>
+
+<!-- ========================================================================
+Definition to track signature certification text (line 15, 16, 18c, 20)
+-->
+<xsd:simpleType name="CertificationStatementDataDataType">
+	<xsd:restriction base="xsd:string">
+		<xsd:maxLength value="850"/>
+	</xsd:restriction>
+</xsd:simpleType>
+
+<!-- ========================================================================
+Definition of a signatory name (line 15, 16, 18c, 20)
+-->
+<xsd:simpleType name="SignatoryNameDataType">
+	<xsd:restriction base="xsd:string">
+		<xsd:maxLength value="40"/>
+	</xsd:restriction>
+</xsd:simpleType>
+
+<!-- ========================================================================
+Definition of Import/Export Flag (Line 16)
+-->
+<xsd:simpleType name="ImportExportFlagDataType">
+	<xsd:restriction base="xsd:string">
+		<xsd:enumeration value="Import"/>
+		<xsd:enumeration value="Export"/>
+	</xsd:restriction>
+</xsd:simpleType>
+
+<!-- ========================================================================
+Definition of a Port of Entry/Exit(line 16)
+-->
+<xsd:simpleType name="EntryExitPortDataType">
+	<xsd:restriction base="xsd:string">
+		<xsd:maxLength value="25"/>
+	</xsd:restriction>
+</xsd:simpleType>
+
+<!-- ========================================================================
+Definition of a Management Method(line 19)
+
+CHANGED:
+	2015.07.22 - Changed max length to 4 based on EPA feedback.
+-->
+<xsd:simpleType name="ManagementMethodDataType">
+	<xsd:restriction base="xsd:string">
+		<xsd:maxLength value="4"/>
+	</xsd:restriction>
+</xsd:simpleType>
+
+
+
+<!--
+
+*****************************************************************************
+* COMPLEX TYPE DEFINITIONS													*
+*****************************************************************************
+-->
+
+<!-- ========================================================================
+Definition of a signature block (line 15, 16, 18c, 20)
+-->
+<xsd:complexType name="SignatureBlockDataType">
+		<xsd:element name="CertificationStatement" type="CertificationStatementDataDataType"/>
+		<xsd:element name="SignatoryName" type="SignatoryNameDataType"/>
+		<xsd:element name="SignatureDate" type="xsd:date"/>
+		<xsd:element name="SignatureBlock" type="xsd:base64Binary"/>
+</xsd:complexType>
+
+<!-- ========================================================================
+Definition of an address (lines 5, 8, 18b)
+-->
+<xsd:complexType name="HandlerAddressDataType">
+		<xsd:element name="StreetNumber" type="StreetNumberDataType"/>
+		<xsd:element name="AddressLine1" type="AddressDataType"/>
+		<xsd:element name="AddressLine2" type="AddressDataType" minOccurs="0" maxOccurs="1" />
+		<xsd:element name="Locality" type="LocalityNameDataType"/>
+		<xsd:element name="State" type="StateDistrictDataType"/>
+		<xsd:element name="Country" type="CountryDataType"/>
+		<xsd:element name="PostalCode" type="PostalCodeDataType"/>
+</xsd:complexType>
+
+<!-- ========================================================================
+Definition of a Generator, TSDF, or Alternate Facility (Line 5, 8, 18b)
+-->
+<xsd:complexType name="HandlerDataType">
+		<xsd:element name="Name" type="HandlerNameDataType"/>
+		<xsd:element name="EPAID" type="HandlerIDDataType"/>
+		<xsd:element name="TelephoneNumber" type="TelephoneNumberDataType"/>
+		<xsd:element name="Address" type="HandlerAddressDataType"/>
+		<xsd:element name="SignatureBlock" type="SignatureBlockDataType"/>
+</xsd:complexType>
+
+<!-- ========================================================================
+Definition of a Transporter (Line 6, 7)
+	This is different than a Generator or TSDF because Transporters do not
+	need addresses or phone numbers.
+-->
+<xsd:complexType name="TransporterDataType">
+		<xsd:element name="Name" type="HandlerNameDataType"/>
+		<xsd:element name="EPAID" type="HandlerIDDataType"/>
+		<xsd:element name="SignatureBlock" type="SignatureBlockDataType"/>
+</xsd:complexType>
+
+<!-- ========================================================================
+Definition of Additional optional EPA data for each waste line (Line 9b).
+
+Note that on the third line, the CASNumber entry would be used if e-Manifest
+were linked to the Substance Registry System. The exact index field (e.g.
+CAS Number, EPA ID #, other substance indicators, etc.) could be adjusted
+based on integration needs.
+
+CHANGE:
+	2015.07.22	Added based on EPA feedback
+-->
+<xsd:complexType name="EPADescriptionDataType">
+		<xsd:element name="EmergencyResponsePhone" type="TelephoneNumberDataType"/>
+		<!-- <xsd:element name="CASNumber" type="CASNumberDataType"/> -->
+		<xsd:element name="SpecialHandling" type="SpecialHandlingDataType"/>
+		<xsd:element name="TrackingInstructions" type="TrackingInstructionsDataType"/>
+		<xsd:element name="WasteProfileNumber" type="WasteProfileNumberDataType"/>
+		<xsd:element name="ContainerNumber" type="ContainerNumberDataType"/>
+		<xsd:element name="ResponseGuideNumber" type="ResponseGuideNumberDataType"/>
+</xsd:complexType>
+
+
+
+<!-- ========================================================================
+Definition of US DOT Waste Description Item (Line 9b)
+-->
+<xsd:complexType name="DOTDescriptionDataType">
+		<xsd:element name="ProperShippingName" type="DOTShippingNameDataType"/>
+		<xsd:element name="HazardClass" type="DOTHazardClassDataType"/>
+		<xsd:element name="IDNumber" type="DOTIDNumberDataType"/>
+		<xsd:element name="PackingGroup" type="DOTPackingGroupDataType"/>
+</xsd:complexType>
+
+<!-- ========================================================================
+Definition of Container Information (Line 10)
+-->
+<xsd:complexType name="ContainerInfoDataType">
+		<xsd:element name="ContainerNumberOf">
+			<xsd:simpleType>
+				<xsd:restriction base="xsd:integer">
+					<xsd:minExclusive value="0"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+		</xsd:element>
+		<xsd:element name="Type" type="ContainerTypeDataType"/>
+    <xsd:element name="OtherTypeName" type="xsd:string" minOccurs="0" maxOccurs="1" />
+</xsd:complexType>
+
+<!-- ========================================================================
+Definition of a Waste Line Item (Lines 9, 10, 11, 12, 13)
+
+CHANGE:
+	2015.07.22	Added EPADescription based on EPA feedback.
+-->
+<xsd:complexType name="WasteLineItemDataType">
+		<xsd:element name="HazardousWaste" type="xsd:boolean"/>
+		<xsd:element name="EPADescription" type="EPADescriptionDataType" minOccurs="0"/>
+		<xsd:element name="DOTDescription" type="DOTDescriptionDataType"/>
+		<xsd:element name="ContainerInfo" type="ContainerInfoDataType" maxOccurs="unbounded"/>
+		<xsd:element name="TotalQuantity">
+			<xsd:simpleType>
+				<xsd:restriction base="xsd:decimal">
+					<xsd:minExclusive value="0"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+		</xsd:element>
+		<xsd:element name="UnitOfMeasure" type="UnitsOfMeasureDataType"/>
+		<xsd:element name="WasteCodes" type="WasteCodeDataType" maxOccurs="unbounded"/>
+</xsd:complexType>
+
+<!-- ========================================================================
+Definition of data that may appear in the Special Handling Instructions and
+Additional Information box (Line 14).
+
+CHANGE:
+	2015.07.23	Broke box contents out into separate fields based on EPA
+	feedback.
+	2015.08.19	Added Special Permit ID and new complex type 
+	2015.08.26      Modified XML
+-->
+<xsd:complexType name="AdditionalInfo_Line14DataType">
+		<xsd:element name="AdditionalInfo" type="AdditionalInfoTextDataType" minOccurs="0"/>
+		<xsd:element name="ManifestNumberForRejectedWaste" type="ManifestTrackingNumberDataType" minOccurs="0"/>
+		<xsd:element name="AlternateFacility" type="HandlerDataType" minOccurs="0"/>
+		<xsd:element name="DateRemovedFromService" type="xsd:date" minOccurs="0"/>
+		<xsd:element name="PCBDescription" type="PCBDescriptionDataType" minoccurs="0"/>
+		<xsd:element name="SpecialPermitID" type="SpecialPermitIDDataType" minOccurs="0"/>
+		<xsd:element name="UserDefinedField_Line14" type="UserDefinedField_Line14DataType" minOccurs="0"/>
+</xsd:complexType>
+
+
+<!-- ==============================================================================
+	2015.08.26	Added per new UDF element above
+-->
+
+<xsd:complexType name="UserDefinedField_Line14DataType">
+		<xsd:element name="UDFFacilityOwner" type="HandlerIDDataType" minOccurs="0"/>
+		<xsd:element name="UDFDescription" type="UDFDescriptionDataType" minoccurs="0"/>
+		<xsd:element name="UDFData" type="UDFDataDataType" minoccurs="0"/>
+</xsd:complexType>
+
+
+
+
+<!-- ========================================================================
+Definition of International Shipment Information (Line 16)
+-->
+<xsd:complexType name="IntlInfoDataType">
+		<xsd:element name="ImportExportFlag" type="ImportExportFlagDataType"/>
+		<xsd:element name="PortOfEntryExit" type="EntryExitPortDataType"/>
+		<xsd:element name="SignatureBlock" type="SignatureBlockDataType"/>
+</xsd:complexType>
+
+<!-- ========================================================================
+Definition of DiscrepencyInfo for a Manifest.(Line 18, 18a)
+-->
+<xsd:element name="DiscrepancyInfoDataType">
+	<xsd:complexType>
+		<xsd:sequence>
+			<xsd:element name="QuantityDiscrepancy" type="xsd:boolean"/>
+			<xsd:element name="TypeDiscrepancy" type="xsd:boolean"/>
+			<xsd:element name="ResidueDiscrepancy" type="xsd:boolean"/>
+			<xsd:element name="PartialRejection" type="xsd:boolean"/>
+			<xsd:element name="FullRejection" type="xsd:boolean"/>
+			<xsd:element name="ManifestReferenceNumber" type="ManifestTrackingNumberDataType"/>
+			<xsd:element name="AdditionalInfo" type="AdditionalInfoTextDataType"/>
+			<xsd:element name="AlternateFacility" type="HandlerDataType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:element>
+
+<!-- ========================================================================
+Definition of info required from TSDF to close manifest (Line 18, 19, 20)
+-->
+<xsd:element name="DesignatedFacilityInfoDataType">
+	<xsd:complexType>
+		<xsd:sequence>
+			<xsd:element name="DiscrepencyInfo" type="DiscrepancyInfoDataType"/>
+			<xsd:element name="HazardousWasteManagementCodes" type="ManagementMethodDataType" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:element>
+
+<!-- ========================================================================
+Definition of the Manifest Structure (top level of the data hierarchy)
+-->
+<xsd:element name="Manifest">
+	<xsd:complexType>
+		<xsd:sequence>
+			<xsd:element name="ManifestTrackingNumber" type="ManifestTrackingNumberDataType"/>
+			<xsd:element name="EmergencyResponsePhone" type="TelephoneNumberDataType"/>
+			<xsd:element name="Generator" type="HandlerDataType"/>
+			<xsd:element name="Transporter" type="TransporterDataType" maxOccurs="unbounded"/>
+			<xsd:element name="TSDF" type="HandlerDataType"/>
+			<xsd:element name="ManifestedWaste" type="WasteLineItemDataType" maxOccurs="unbounded"/>
+			<xsd:element name="AdditionalInfo_Line14" type="AdditionalInfo_Line14DataType"/>
+			<xsd:element name="InternationalShipmentInfo" type="IntlInfoDataType"/>
+			<xsd:element name="DesignatedFacilityInfo" type="DesignatedFacilityInfoDataType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:element>
+
+</xsd:schema>
