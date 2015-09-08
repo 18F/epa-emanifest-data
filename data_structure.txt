@@ -1,0 +1,283 @@
+
+telephone
+----------
+Telephone: "1234567890"
+
+
+generator
+----------
+    Q: ^^ Is a list with one dictionary -- are you expecting multiple
+    generators to a manifest? This is a consistent thing that I see in the
+    sample data. Is every list going to have multiple objects?
+"HandlerDataType":
+
+
+
+manifest
+----------
+"ManifestTrackingNumber":"ABC123456789",
+"EmergencyResponsePhone": telephone,
+    Q: ^^ Dict with one phone number, are you expecting multiple?
+    if no, then this should be string value.
+"Generator": generator,
+
+
+
+            [
+            {
+            "HandlerNameDataType":"Name of a company with a 40 char string",
+            "HandlerIDDataType":"DCR123456789",
+            "TelephoneNumberDataType":"1234560986",
+                    "HandlerAddressDataType":
+                [
+                    {
+                    "StreetNumberDataType":"123 W Street",
+                        "AddressDataType":"SUITE 32",
+                    "AddressDataType":"PO BOX 0987",
+                    "LocalityNameDataType":"New City City",
+                    "StateDistrictDataType":"DC",
+                    "CountryDataType":"USA",
+                    "PostalCodeDataType":"123450987"
+                    }
+                ],
+            "SignatureBlockDataType":
+                [
+                    {
+                    "CertificationStatementDataDataType":"I hereby declare that the contents of this consignment are fully and accurately described above by the proper shipping name, and are classified, packaged, marked and labeled/placarded, and are in all respects in proper condition for transport according to applicable international and national governmental regulations. If export shipment and I am the Primary Exporter, I certify that the contents of this consignment conform to the terms of the attached EPA Acknowledgment of Consent. I certify that the waste minimization statement identified in 40 CFR 262.27(a) (if I am a large quantity generator) or (b) (if I am a small quantity generator) is true.",
+                    "SignatoryName":"Juan Herrero",
+                    "SignatureDate":"2015-08-25T14:12:12Z",
+                    "SignatureBlock":"ipfgiperigbaeripgaw9prgv9awrcaw-0f3dfw4fg23fhw34H-32J0FW9-4F..."
+                    }
+                ]
+            }
+           ]
+        }
+        ],
+
+
+
+    "Transporter":
+        [
+        {
+        "HandlerDataType":
+            [
+            {
+            "HandlerNameDataType":"Trucking Co",
+            "HandlerIDDataType":"ILT987654321",
+            "SignatureBlockDataType":
+                [
+                    {
+                    "CertificationStatementDataDataType":"I hereby declare that the contents of this consignment are fully and accurately described above by the proper shipping name, and are classified, packaged, marked and labeled/placarded, and are in all respects in proper condition for transport according to applicable international and national governmental regulations. If export shipment and I am the Primary Exporter, I certify that the contents of this consignment conform to the terms of the attached EPA Acknowledgment of Consent. I certify that the waste minimization statement identified in 40 CFR 262.27(a) (if I am a large quantity generator) or (b) (if I am a small quantity generator) is true.",
+                    "SignatoryName":"John Smith",
+                    "SignatureDate":"2015-08-25T14:13:56Z",
+                    "SignatureBlock":"XpfDiTHrepg0404wg00w04g0v9awrcaw-0f3dfw4fg23fhw34H-122J0FW3-4F..."
+                    }
+                ]
+            }
+           ]
+        }
+        ],
+    "TSDF":
+        [
+        {
+        "HandlerDataType":
+            [
+            {
+            "HandlerNameDataType":"TSDF Co",
+            "HandlerIDDataType":"CTD123456789",
+            "TelephoneNumberDataType":"1234560986",
+                    "HandlerAddressDataType":
+                [
+                    {
+                    "StreetNumberDataType":"321 E Ave",
+                        "AddressDataType":"SUITE 23",
+                    "LocalityNameDataType":"Old City City",
+                    "StateDistrictDataType":"CT",
+                    "CountryDataType":"USA",
+                    "PostalCodeDataType":"543217890"
+                    }
+                ],
+                "SignatureBlockDataType":
+                [
+                    {
+                    "CertificationStatementDataDataType":"I hereby declare that the contents of this consignment are fully and accurately described above by the proper shipping name, and are classified, packaged, marked and labeled/placarded, and are in all respects in proper condition for transport according to applicable international and national governmental regulations. If export shipment and I am the Primary Exporter, I certify that the contents of this consignment conform to the terms of the attached EPA Acknowledgment of Consent. I certify that the waste minimization statement identified in 40 CFR 262.27(a) (if I am a large quantity generator) or (b) (if I am a small quantity generator) is true.",
+                    "SignatoryName":"Jean Forgeron",
+                    "SignatureDate":"2015-08-25T17:33:26Z",
+                    "SignatureBlock":"ipWR0c6hge0m0g4040kggcaw-0f3dfw4fg23fhw14H-52J0FW4-4F..."
+                    }
+                ]
+            }
+           ]
+        }
+        ],
+    "ManifestedWaste":
+        [
+        {
+        "WasteLineItemDataType":
+            [
+            {
+                "HazardousWaste":true,
+                "EPADescriptionDataType":
+                [
+                    {
+                    "SpecialHandlingDataType":null,
+                    "TrackingInstructionsDataType":null,
+                    "WasteProfileNumberDataType":null,
+                    "ContainerNumberDataType":"ReST For the Rest",
+                    "ResponseGuideNumberDataType":null
+                    }
+                ],
+                "DOTDescriptionDataType":
+                [
+                    {
+                    "DOTShippingNameDataType":"Non RCRA Regulated",
+                    "DOTHazardClassDataType":null,
+                    "DOTIDNumberDataType":null,
+                    "DOTPackingGroupDataType":null
+                    }
+                ],
+                "ContainerInfoDataType":
+                [
+                    {
+                    "ContainerNumberOf":3,
+                    "ContainerTypeDataType":"DM"
+
+                    }
+                ],
+                "TotalQuantity":165,
+                "UnitsOfMeasureDataType":"G",
+                "WasteCodeDataTypeFederal":null,
+                "WasteCodeDataTypeState":["CR01","CR02"]
+
+            },
+            {
+                "HazardousWaste":true,
+                "EPADescriptionDataType":
+                [
+                    {
+                    "SpecialHandlingDataType":null,
+                    "TrackingInstructionsDataType":null,
+                    "WasteProfileNumberDataType":null,
+                    "ContainerNumberDataType":"ReST For the Rest",
+                    "ResponseGuideNumberDataType":null
+                    }
+                ],
+                "DOTDescriptionDataType":
+                [
+                    {
+                    "DOTShippingNameDataType":"RQ Waste Combustible liquid (Petroleum Naptha) Parts Washer",
+                    "DOTHazardClassDataType":null,
+                    "DOTIDNumberDataType":"NA1993",
+                    "DOTPackingGroupDataType":"III"
+                    }
+                ],
+                "ContainerInfoDataType":
+                [
+                    {
+                    "ContainerNumberOf":2,
+                    "ContainerTypeDataType":"DM"
+
+                    }
+                ],
+                "TotalQuantity":110,
+                "UnitsOfMeasureDataType":"G",
+                "WasteCodeDataTypeFederal":["D001","D018","D039"],
+                "WasteCodeDataTypeState":["CR02"]
+
+            }
+            ]
+        }
+        ],
+    "AdditionalInfo_Line14":
+        [
+        {"AdditionalInfo_Line14DataType":
+           [
+            {
+                "AdditionalInfoTextDataType":"The line below is redundant, ask me how!",
+                "ManifestTrackingNumberDataType":"XYZ123456789",
+                "HandlerDataType":null,
+                "DateRemovedFromService":"2015-09-25T07:13:46Z",
+                "PCBDescriptionDataType":null,
+                "SpecialPermitIDDataType":null,
+                "UserDefinedField_Line14DataType":
+                [
+                    {
+                    "UDFFacilityOwner":"CTD123456789",
+                    "UDFDescriptionDataType":"Our internal numbers",
+                    "UDFDataDataType":"42"
+                    }
+                ],
+                "UserDefinedField_Line14DataType":
+                [
+                    {
+                    "UDFFacilityOwner":"XYZ123456789",
+                    "UDFDescriptionDataType":"My internal number",
+                    "UDFDataDataType":"0248058287130671086029"
+                    }
+                ]
+
+            }
+           ]
+        }
+        ],
+    "InternationalShipmentInfo":
+        [
+        {"IntlInfoDataType":
+            [
+            {
+
+                "ImportExportFlagDataType":null,
+                "EntryExitPortDataType":null,
+                "SignatureBlockDataType":null
+            }
+            ]
+        }
+        ],
+    "DesignatedFacilityInfo":
+        [
+        {"DesignatedFacilityInfoDataType":
+            [
+            {
+                "QuantityDiscrepancy":true,
+                "TypeDiscrepancy":false,
+                "ResidueDiscrepancy":false,
+                "PartialRejection":false,
+                "FullRejection":false,
+                "ManifestTrackingNumberDataType":"XYZ123456789",
+                "AdditionalInfoTextDataType":"Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test ",
+                "HandlerDataType":
+                [
+                   {
+                   "HandlerNameDataType":"Alt TSDF Co",
+                   "HandlerIDDataType":"DEP123456789",
+                   "TelephoneNumberDataType":"5554560986",
+                       "HandlerAddressDataType":
+                       [
+                       {
+                           "StreetNumberDataType":"123 N Street",
+                           "AddressDataType":"SUITE 99",
+                           "AddressDataType":"PO BOX 8642",
+                           "LocalityNameDataType":"Dover",
+                           "StateDistrictDataType":"DE",
+                           "CountryDataType":"USA",
+                           "PostalCodeDataType":"024688642"
+                       }
+                       ],
+                "SignatureBlockDataType":
+                [
+                    {
+                    "CertificationStatementDataDataType":"I hereby declare that the contents of this consignment are fully and accurately described above by the proper shipping name, and are classified, packaged, marked and labeled/placarded, and are in all respects in proper condition for transport according to applicable international and national governmental regulations. If export shipment and I am the Primary Exporter, I certify that the contents of this consignment conform to the terms of the attached EPA Acknowledgment of Consent. I certify that the waste minimization statement identified in 40 CFR 262.27(a) (if I am a large quantity generator) or (b) (if I am a small quantity generator) is true.",
+                    "SignatoryName":"John Smythe",
+                    "SignatureDate":"2015-08-25T14:12:12Z",
+                    "SignatureBlock":"ipfgiperigbaeripgaw9prgv9awrcaw-0f3dfw4fg23fhw34H-32J0FW9-4F..."
+                    }
+                ]
+            }
+           ]
+            }
+            ]
+        }
+        ]
+   }
+]
+
