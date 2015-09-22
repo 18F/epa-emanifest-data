@@ -1,4 +1,10 @@
+from django.core.validators import RegexValidator
 from django.db import models
+
+
+# TODO for int'l
+# Update phone to 20
+# Update state to "state/providence/region"
 
 
 class Address(models.Model):
@@ -9,11 +15,11 @@ class Address(models.Model):
         ('PR', 'Puerto Rico'),
     )
 
-    address_line_1 = models.CharField(max_length=200)
-    address_line_2 = models.CharField(max_length=200, blank=True, null=True)
-    city = models.CharField(max_length=100)
-    state = models.CharField(max_length=3)  # "state/providence/region"
-    postal_code = models.CharField(max_length=10)
+    address_line_1 = models.CharField(max_length=60)
+    address_line_2 = models.CharField(max_length=60, blank=True, null=True)
+    city = models.CharField(max_length=50)
+    state = models.CharField(max_length=50)  # "state/providence/region"
+    postal_code = models.CharField(max_length=20)
     country = models.CharField(max_length=100, choices=COUNTRIES, default='US')
 
     def __str__(self):
@@ -58,7 +64,7 @@ class DesinatedFacility(models.Model):
 # The way that addresses are handled here should be thought out better.
 # This is a quick hack for demo purposes.
 class Generator(models.Model):
-    name = models.CharField(max_length=200)
+    name = models.CharField(max_length=40)
     phone = models.CharField(max_length=12)
     address = models.ForeignKey('Address')
     mailing_address = models.ForeignKey('Address',
@@ -101,10 +107,20 @@ class International(models.Model):  # 16
 
 
 class Manifest(models.Model):
-    tracking_number = models.CharField(max_length=200)  # 4
+    # "ManifestTrackingNumber":"3 Letters  9 numbers",
+    tracking_number = models.CharField(max_length=12)  # 4
 
     generator = models.ForeignKey('Generator')  # 1
-    emergency_phone = models.CharField(max_length=15)  # 3
+
+    # TODO: How to validate -- emergency numbers internationally?
+    # django local flavor -- validate the number by locality
+    # "23 alphanumberic string accounting for international numbers
+    # e.g. +001 1234321234, to be honest this is just a safety feature,
+    # most will be standard 10 digit"
+    # # 3
+    phone_help = "Phone number 9-15 digits, entered in the format: '999999999'"
+    phone_regex = RegexValidator(regex=r'^\d{9,15}$', message=phone_help)
+    emergency_phone = models.CharField(validators=[phone_regex], max_length=15)
 
     international = models.ForeignKey('International', null=True, blank=True)
     designated_facility = models.ForeignKey('DesinatedFacility')
@@ -150,7 +166,7 @@ class Manifest(models.Model):
 class Transporter(models.Model):
     manifest = models.ForeignKey('Manifest')  # 6, 7
     name = models.CharField(max_length=200)
-    epa_id = models.CharField(max_length=200)
+    epa_id = models.CharField(max_length=12)
     # aknowledgement_name = models.CharField(max_length=200)
     # aknowledgement = ?? signature
     # aknowledgement_date = models.DateField()
@@ -189,6 +205,9 @@ class ManifestedWaste(models.Model):
 
     hazardous_waste = models.BooleanField()  # 9a HM
     description = models.TextField(null=True, blank=True)
+
+    # (including Proper Shipping Name, Hazard Class, ID Number, and
+    # Packing Group (if any))
 
     container_quantity = models.IntegerField()
     container_type = models.CharField(max_length=5)
