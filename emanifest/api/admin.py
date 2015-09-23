@@ -1,6 +1,6 @@
 from django.contrib import admin
 from api.models import (
-    Address, Transporter, DesinatedFacility,
+    Address, Transporter, EPAEntity,
     Generator, International, WasteCode,
     ManifestedWaste, Manifest
 )
@@ -37,7 +37,7 @@ class GenericAdmin(admin.ModelAdmin):
 
 admin.site.register(Address, GenericAdmin)
 admin.site.register(Transporter, GenericAdmin)
-admin.site.register(DesinatedFacility, GenericAdmin)
+admin.site.register(EPAEntity, GenericAdmin)
 admin.site.register(Generator, GeneratorAdmin)
 admin.site.register(International, GenericAdmin)
 admin.site.register(WasteCode, GenericAdmin)

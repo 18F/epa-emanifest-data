@@ -44,14 +44,44 @@ class Address(models.Model):
         )
 
 
-class DesinatedFacility(models.Model):
+class EPAEntity(models.Model):
+
+    sig_statement_default = "I hereby declare that the contents \
+        of this consignment are fully and \
+        accurately described above by the proper shipping name, and are \
+        classified, packaged, marked and labeled/placarded, and are in all \
+        respects in proper condition for transport according to applicable \
+        international and national governmental regulations. If export \
+        shipment and I am the Primary Exporter, I certify that the \
+        contents of this consignment conform to the terms of the \
+        attached EPA Acknowledgment of Consent. I certify that the waste \
+        minimization statement identified in 40 CFR 262.27(a) (if I am a \
+        large quantity generator) or (b) (if I am a small quantity \
+        generator) is true."
+
     name = models.CharField(max_length=200)
-    address = models.ForeignKey('Address')
+
+    # TODO: EPA ID: XXX123456789
     epa_id = models.CharField(max_length=200)
-    phone = models.CharField(max_length=12)
+
+    # TODO: Validate address & phone for designated facility
+    address = models.ForeignKey('Address', null=True, blank=True)
+    phone = models.CharField(max_length=12, null=True, blank=True)
+
+    signature_name = models.CharField(max_length=200, null=True, blank=True)
+    certification_statments = models.TextField(default=sig_statement_default,
+                                               null=True, blank=True)
+    signature_date = models.DateField(null=True, blank=True)
+    signature = models.CharField(max_length=200, null=True, blank=True)
+
+    def __str__(self):
+        return ', '.join([self.name, self.epa_id])
 
     def as_json(self):
-        address = self.address.as_json()
+        try:
+            address = self.address.as_json()
+        except AttributeError:
+            address = {}
 
         return dict(
             name=self.name,
@@ -123,9 +153,15 @@ class Manifest(models.Model):
     emergency_phone = models.CharField(validators=[phone_regex], max_length=15)
 
     international = models.ForeignKey('International', null=True, blank=True)
-    designated_facility = models.ForeignKey('DesinatedFacility')
+    designated_facility = models.ForeignKey('EPAEntity')  # 'DesinatedFacility'
 
     special_instructions = models.TextField(blank=True)
+    # TODO: Compare these to sample data. Can we parse at this time?
+    # special handling -- TextField
+    # tracking instructions -- TextField
+    # waste profile number -- 9 Charater pattern value=([0-9])+
+    # container number -- 20 char
+    # response guide number - 4 Alphanumeric pattern value=[0-9,a-z,A-Z](0-9)+
 
     # This is included, b/c maybe it could be used as a way to validate
     number_of_pages = models.IntegerField()  # 2
@@ -144,7 +180,7 @@ class Manifest(models.Model):
         designated_facility = self.designated_facility.as_json()
 
         transporters = Transporter.objects.filter(manifest_id=self.id)
-        transporters = [t.as_json() for t in transporters]
+        transporters = [t.transporter.as_json() for t in transporters]
 
         waste = ManifestedWaste.objects.filter(manifest_id=self.id)
         print(waste)
@@ -165,21 +201,10 @@ class Manifest(models.Model):
 
 class Transporter(models.Model):
     manifest = models.ForeignKey('Manifest')  # 6, 7
-    name = models.CharField(max_length=200)
-    epa_id = models.CharField(max_length=12)
+    transporter = models.ForeignKey('EPAEntity')  # "transporter"
     # aknowledgement_name = models.CharField(max_length=200)
     # aknowledgement = ?? signature
     # aknowledgement_date = models.DateField()
-
-    def __str__(self):
-        return self.name, self.epa_id
-
-    def as_json(self):
-
-        return dict(
-            name=self.name,
-            epa_id=self.epa_id,
-        )
 
 
 class WasteCode(models.Model):
@@ -188,6 +213,8 @@ class WasteCode(models.Model):
         ('State', 'State'),
     )
 
+    # if the code is federal then max length = 4
+    # if the code it state, then max length = 8
     code = models.CharField(max_length=10, null=True, blank=True)
     code_type = models.CharField(max_length=10, choices=WASTE_CODE_TYPES)
 
@@ -201,27 +228,75 @@ class WasteCode(models.Model):
 
 class ManifestedWaste(models.Model):
 
+    DOT_GROUPS = (
+        ("", "None"),
+        ("I", "I"),
+        ("II", "II"),
+        ("III", "III"),
+    )
+
+    CONTAINER_TYPES = (
+        ("BA", "Burlap, cloth, paper, or plastic bags"),
+        ("CF", "Fiber or plastic boxes, cartons, cases"),
+        ("CM", "Metal boxes, cartons, cases (including roll-offs"),
+        ("CW", "Wooden boxes, cartons, cases"),
+        ("CY", "Cylinders"),
+        ("DF", "Fiberboard or plastic drums, barrels, kegs"),
+        ("DM", "Metal drums, barrels, kegs"),
+        ("DW", "Wooden drums, barrels, kegs"),
+        ("HG", "Hopper or gondola cars"),
+        ("TC", "Tank cars"),
+        ("TP", "Portable tanks"),
+        ("TT", "Cargo tanks (tank trucks)."),
+    )
+
+    UNITS_OF_MEASURE = (
+        ("G", "Gallons (liquids only)"),
+        ("N", "Cubic Meters"),
+        ("K", "Kilograms P = Pounds"),
+        ("L", "Liters (liquids only)"),
+        ("T", "Tons (2000 Pounds)"),
+        ("M", "Metric Tons (1000 Kilograms)"),
+        ("Y", "Cubic Yards"),
+    )
+
     manifest = models.ForeignKey('Manifest')
 
     hazardous_waste = models.BooleanField()  # 9a HM
-    description = models.TextField(null=True, blank=True)
+    # description = models.TextField(null=True, blank=True)
+    dot_description = models.TextField(null=True, blank=True)
+    dot_shipping_name = models.CharField(max_length=255, null=True, blank=True)
+    dot_hazard_class = models.CharField(max_length=300, null=True, blank=True)
+    dot_id = models.CharField(max_length=6, null=True, blank=True)
+    dot_packing_group = models.CharField(max_length=6, choices=DOT_GROUPS,
+                                         blank=True, default='')
 
     # (including Proper Shipping Name, Hazard Class, ID Number, and
     # Packing Group (if any))
 
     container_quantity = models.IntegerField()
-    container_type = models.CharField(max_length=5)
+    container_type = models.CharField(max_length=2, choices=CONTAINER_TYPES)
 
     total_quantity = models.IntegerField()      # total quantity # 11
-    units_of_measure = models.CharField(max_length=5)  # 12
+    units_of_measure = models.CharField(max_length=1, choices=UNITS_OF_MEASURE)
+    # 12
+
     waste_codes = models.ForeignKey('WasteCode', null=True, blank=True)  # 13
 
     def as_json(self):
         waste_codes = self.waste_codes.as_json()
 
+        description = dict(
+            description=self.dot_description,
+            shipping_name=self.dot_shipping_name,
+            hazard_class=self.dot_hazard_class,
+            dot_id=self.dot_id,
+            packing_group=self.dot_packing_group,
+        )
+
         return dict(
             hazardous_waste=self.hazardous_waste,
-            description=self.description,
+            dot_description=description,
             container_quantity=self.container_quantity,
             container_type=self.container_type,
             total_quantity=self.total_quantity,
