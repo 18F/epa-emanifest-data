@@ -5,6 +5,22 @@ from django.db import models
 # TODO for int'l
 # Update phone to 20
 # Update state to "state/providence/region"
+# TODO: Validate address & phone for designated facility
+
+class EPAEntity(models.Model):
+
+    name = models.CharField(max_length=40)
+    # TODO: EPA ID: XXX123456789 -- if we are validating on this.
+    epa_id = models.CharField(max_length=12)
+
+    def __str__(self):
+        return ', '.join([self.name, self.epa_id])
+
+    def as_json(self):
+        return dict(
+            name=self.name,
+            epa_id=self.epa_id,
+        )
 
 
 class Address(models.Model):
@@ -44,8 +60,7 @@ class Address(models.Model):
         )
 
 
-class EPAEntity(models.Model):
-
+class Signature(models.Model):
     sig_statement_default = "I hereby declare that the contents \
         of this consignment are fully and \
         accurately described above by the proper shipping name, and are \
@@ -59,44 +74,23 @@ class EPAEntity(models.Model):
         large quantity generator) or (b) (if I am a small quantity \
         generator) is true."
 
-    name = models.CharField(max_length=200)
-
-    # TODO: EPA ID: XXX123456789
-    epa_id = models.CharField(max_length=200)
-
-    # TODO: Validate address & phone for designated facility
-    address = models.ForeignKey('Address', null=True, blank=True)
-    phone = models.CharField(max_length=12, null=True, blank=True)
-
     signature_name = models.CharField(max_length=200, null=True, blank=True)
     certification_statments = models.TextField(default=sig_statement_default,
                                                null=True, blank=True)
     signature_date = models.DateField(null=True, blank=True)
     signature = models.CharField(max_length=200, null=True, blank=True)
 
-    def __str__(self):
-        return ', '.join([self.name, self.epa_id])
-
-    def as_json(self):
-        try:
-            address = self.address.as_json()
-        except AttributeError:
-            address = {}
-
-        return dict(
-            name=self.name,
-            phone=self.phone,
-            address=address,
-            epa_id=self.epa_id,
-        )
+    # aknowledgement_name = models.CharField(max_length=200)
+    # aknowledgement = ?? signature
+    # aknowledgement_date = models.DateField()
 
 
 # The way that addresses are handled here should be thought out better.
 # This is a quick hack for demo purposes.
-class Generator(models.Model):
-    name = models.CharField(max_length=40)
+class Generator(EPAEntity):
+
     phone = models.CharField(max_length=12)
-    address = models.ForeignKey('Address')
+    site_address = models.ForeignKey('Address', related_name='site_address')
     mailing_address = models.ForeignKey('Address',
                                         related_name='mailing_address',
                                         null=True, blank=True)
@@ -136,6 +130,11 @@ class International(models.Model):  # 16
         return international_dict
 
 
+class DesignatedFacility(EPAEntity):
+    address = models.ForeignKey('Address', null=True, blank=True)
+    phone = models.CharField(max_length=12, null=True, blank=True)
+
+
 class Manifest(models.Model):
     # "ManifestTrackingNumber":"3 Letters  9 numbers",
     tracking_number = models.CharField(max_length=12)  # 4
@@ -153,7 +152,9 @@ class Manifest(models.Model):
     emergency_phone = models.CharField(validators=[phone_regex], max_length=15)
 
     international = models.ForeignKey('International', null=True, blank=True)
-    designated_facility = models.ForeignKey('EPAEntity')  # 'DesinatedFacility'
+
+    # 'DesinatedFacility'
+    designated_facility = models.ForeignKey('DesignatedFacility')
 
     special_instructions = models.TextField(blank=True)
     # TODO: Compare these to sample data. Can we parse at this time?
@@ -199,19 +200,11 @@ class Manifest(models.Model):
         )
 
 
-class Transporter(models.Model):
+class Transporter(EPAEntity):
     manifest = models.ForeignKey('Manifest')  # 6, 7
-    transporter = models.ForeignKey('EPAEntity')  # "transporter"
-    # aknowledgement_name = models.CharField(max_length=200)
-    # aknowledgement = ?? signature
-    # aknowledgement_date = models.DateField()
 
 
 class WasteCode(models.Model):
-    WASTE_CODE_TYPES = (
-        ('Federal', 'Federal'),
-        ('State', 'State'),
-    )
 
     # if the code is federal then max length = 4
     # if the code it state, then max length = 8
@@ -227,38 +220,6 @@ class WasteCode(models.Model):
 
 
 class ManifestedWaste(models.Model):
-
-    DOT_GROUPS = (
-        ("", "None"),
-        ("I", "I"),
-        ("II", "II"),
-        ("III", "III"),
-    )
-
-    CONTAINER_TYPES = (
-        ("BA", "Burlap, cloth, paper, or plastic bags"),
-        ("CF", "Fiber or plastic boxes, cartons, cases"),
-        ("CM", "Metal boxes, cartons, cases (including roll-offs"),
-        ("CW", "Wooden boxes, cartons, cases"),
-        ("CY", "Cylinders"),
-        ("DF", "Fiberboard or plastic drums, barrels, kegs"),
-        ("DM", "Metal drums, barrels, kegs"),
-        ("DW", "Wooden drums, barrels, kegs"),
-        ("HG", "Hopper or gondola cars"),
-        ("TC", "Tank cars"),
-        ("TP", "Portable tanks"),
-        ("TT", "Cargo tanks (tank trucks)."),
-    )
-
-    UNITS_OF_MEASURE = (
-        ("G", "Gallons (liquids only)"),
-        ("N", "Cubic Meters"),
-        ("K", "Kilograms P = Pounds"),
-        ("L", "Liters (liquids only)"),
-        ("T", "Tons (2000 Pounds)"),
-        ("M", "Metric Tons (1000 Kilograms)"),
-        ("Y", "Cubic Yards"),
-    )
 
     manifest = models.ForeignKey('Manifest')
 
